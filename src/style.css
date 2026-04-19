@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+@theme {
+  --color-electric-blue: #4922fd;
+  --color-base-lilac: #aca5fa;
+  --color-base-purple: #4937a1;
+  --color-grey: #585858;
+}
