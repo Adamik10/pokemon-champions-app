@@ -6,3 +6,7 @@
   --color-base-purple: #4937a1;
   --color-grey: #585858;
 }
+
+body {
+  background-color: var(--color-electric-blue);
+}

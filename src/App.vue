@@ -1,19 +1,20 @@
 <template>
-  <div class="bg-electric-blue h-screen w-screen">Content</div>
+  <BurgerMenu />
+  <RouterView />
+  <ModalHost />
 </template>
 
 <script lang="ts">
-export default {
-  data() {
-    return {
-      count: 0,
-    }
-  },
+import { defineComponent } from "vue"
 
-  methods: {
-    increment() {
-      this.count++
-    },
+import BurgerMenu from "@/components/layouts/BurgerMenu.vue"
+import ModalHost from "@/components/modals/ModalHost.vue"
+
+export default defineComponent({
+  name: "App",
+  components: {
+    BurgerMenu,
+    ModalHost,
   },
-}
+})
 </script>
