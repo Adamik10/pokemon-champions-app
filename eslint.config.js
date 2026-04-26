@@ -38,6 +38,10 @@ export default [
       "vue/multiline-html-element-content-newline": "off",
       "vue/html-indent": "off",
       "vue/max-attributes-per-line": "off",
+      "vue/html-closing-bracket-newline": "off",
+      "vue/multi-word-component-names": "off",
+      "vue/require-prop-type-constructor": "off",
+      "vue/require-default-prop": "off",
     },
   },
   {

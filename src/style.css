@@ -5,8 +5,31 @@
   --color-base-lilac: #aca5fa;
   --color-base-purple: #4937a1;
   --color-grey: #585858;
+
+  --font-jaldi: "Jaldi", sans-serif;
+  --font-fjalla: "Fjalla One", sans-serif;
 }
 
+/* 👇 custom typography presets */
+
+@layer utilities {
+  .text-primary {
+    font-family: var(--font-jaldi);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1.79;
+  }
+
+  .text-secondary {
+    font-family: var(--font-fjalla);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+}
 body {
   background-color: var(--color-electric-blue);
 }
