@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[100dvh] pb-[env(safe-area-inset-bottom)]">
+  <div class="-mt-[env(safe-area-inset-bottom)] h-dvh pb-[env(safe-area-inset-bottom)]">
     <BurgerMenu />
     <RouterView />
     <ModalHost />
