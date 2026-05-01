@@ -32,4 +32,5 @@
 }
 body {
   background-color: var(--color-electric-blue);
+  user-select: none;
 }
