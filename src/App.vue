@@ -1,7 +1,9 @@
 <template>
-  <BurgerMenu />
-  <RouterView />
-  <ModalHost />
+  <div class="h-dvh pb-[env(safe-area-inset-bottom)]">
+    <BurgerMenu />
+    <RouterView />
+    <ModalHost />
+  </div>
 </template>
 
 <script lang="ts">
