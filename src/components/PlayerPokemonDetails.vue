@@ -12,14 +12,10 @@
     <!-- Pokemon details section -->
     <div class="flex w-full">
       <!-- Image ability item section -->
-      <div class="flex w-1/3 flex-col gap-2">
-        <div
-          class="bg-base-lilac flex aspect-square w-full items-center justify-center rounded-full">
-          Image
-        </div>
+      <div class="flex w-1/3 flex-col items-center gap-1">
+        <PokemonRender />
         <KeyValueText category="Ability" value="mega sol" />
-        <KeyValueText category="Ability" value="mega sol" />
-        <div>Item</div>
+        <KeyValueText category="Ability" value="Meganiumite" />
       </div>
       <!-- Name typing moves section -->
       <div class="w-1/3">
@@ -38,12 +34,14 @@
 <script lang="ts">
 import Pokeball from "@/assets/Pokeball.vue"
 import KeyValueText from "@/components/UI/KeyValueText.vue"
+import PokemonRender from "@/components/UI/PokemonRender.vue"
 
 export default {
   name: "PlayerPokemonDetails",
   components: {
     Pokeball,
     KeyValueText,
+    PokemonRender,
   },
   data() {
     return {}
