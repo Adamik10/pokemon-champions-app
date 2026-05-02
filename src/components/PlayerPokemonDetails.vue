@@ -14,14 +14,22 @@
       <!-- Image ability item section -->
       <div class="flex w-1/3 flex-col items-center gap-1">
         <PokemonRender />
-        <KeyValueText category="Ability" value="mega sol" />
-        <KeyValueText category="Item" value="Meganiumite" />
+        <KeyValueText category="Ability" value="mega sol" width-class="w-9/10 mr-auto" />
+        <KeyValueText category="Item" value="Meganiumite" width-class="w-9/10 mr-auto" />
       </div>
       <!-- Name typing moves section -->
-      <div class="flex w-1/3 flex-col">
-        <div class="text-headline -ml-5">Crabominable</div>
-        <TypeLabel type="ice" />
-        <div>Moves</div>
+      <div class="flex w-1/3 flex-col gap-1">
+        <div class="text-headline -mb-px -ml-5">Crabominable</div>
+        <div class="-ml-3 flex w-full gap-1">
+          <TypeLabel type="ice" />
+          <TypeLabel type="fighting" />
+        </div>
+        <div class="mt-1 flex w-9/10 flex-col gap-1.5">
+          <MoveLabel />
+          <MoveLabel />
+          <MoveLabel />
+          <MoveLabel />
+        </div>
       </div>
       <!-- Stats section -->
       <div class="w-1/3">
@@ -36,6 +44,7 @@ import type { Pokemon } from "pokenode-ts"
 
 import Pokeball from "@/assets/Pokeball.vue"
 import KeyValueText from "@/components/UI/KeyValueText.vue"
+import MoveLabel from "@/components/UI/MoveLabel.vue"
 import PokemonRender from "@/components/UI/PokemonRender.vue"
 import TypeLabel from "@/components/UI/TypeLabel.vue"
 import { usePokemonStore } from "@/stores/pokemon"
@@ -47,6 +56,7 @@ export default {
     KeyValueText,
     PokemonRender,
     TypeLabel,
+    MoveLabel,
   },
   setup() {
     return {
