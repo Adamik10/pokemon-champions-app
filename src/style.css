@@ -6,27 +6,62 @@
   --color-base-purple: #4937a1;
   --color-grey: #585858;
 
+  /* ------- COLORS PER TYPE ------- */
+  --color-type-normal: #9099a1;
+  --color-type-fighting: #ce4069;
+  --color-type-flying: #8fa8dd;
+  --color-type-poison: #ab6ac8;
+  --color-type-ground: #d97746;
+  --color-type-rock: #c7b78b;
+  --color-type-bug: #90c12c;
+  --color-type-ghost: #5269ac;
+  --color-type-steel: #5a8ea2;
+  --color-type-fire: #ff9c54;
+  --color-type-water: #4d90d5;
+  --color-type-grass: #63bb5f;
+  --color-type-electric: #f3d23b;
+  --color-type-psychic: #f97176;
+  --color-type-ice: #74cec0;
+  --color-type-dragon: #0f6ac0;
+  --color-type-dark: #5a5366;
+  --color-type-fairy: #ec8fe6;
+
   --font-jaldi: "Jaldi", sans-serif;
   --font-fjalla: "Fjalla One", sans-serif;
+
+  --font-size-sm: 0.5rem;
+  --font-size-md-sm: 0.75rem;
+  --font-size-base: 1rem;
+  --font-size-md-lg: 1.5rem;
+  --font-size-lg: 2rem;
+  --font-size-xl: 2.5rem;
 }
 
-/* 👇 custom typography presets */
+/* ------- TYPOGRPHY CLASSES ------- */
 
 @layer utilities {
-  .text-primary {
+  .text-base {
     font-family: var(--font-jaldi);
-    font-size: 0.75rem;
+    font-size: var(--font-size-md-sm);
     font-weight: 400;
     letter-spacing: 0.01em;
     line-height: 1.79;
   }
-
-  .text-secondary {
+  /* ------- E.G. POKEMON NAME ------- */
+  .text-headline {
     font-family: var(--font-fjalla);
-    font-size: 1.5rem;
+    font-size: var(--font-size-md-lg);
     font-weight: 400;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.001em;
     line-height: 1.2;
+  }
+  /* ------- E.G. POKEMON TYPING LABEL ------- */
+  .text-label {
+    font-family: var(--font-fjalla);
+    font-size: var(--font-size-md-sm);
+    font-weight: 400;
+    letter-spacing: 0.001em;
+    line-height: 1.45;
     text-transform: uppercase;
   }
 }
@@ -34,3 +69,9 @@ body {
   background-color: var(--color-electric-blue);
   user-select: none;
 }
+
+@source inline(
+  "bg-type-normal bg-type-fire bg-type-water bg-type-electric bg-type-grass bg-type-ice bg-type-fighting "
+    "bg-type-poison bg-type-ground bg-type-flying bg-type-psychic bg-type-bug bg-type-rock bg-type-ghost "
+    "bg-type-dragon bg-type-dark bg-type-steel bg-type-fairy"
+);

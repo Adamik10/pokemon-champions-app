@@ -15,12 +15,12 @@
       <div class="flex w-1/3 flex-col items-center gap-1">
         <PokemonRender />
         <KeyValueText category="Ability" value="mega sol" />
-        <KeyValueText category="Ability" value="Meganiumite" />
+        <KeyValueText category="Item" value="Meganiumite" />
       </div>
       <!-- Name typing moves section -->
-      <div class="w-1/3">
-        <div>Name</div>
-        <div>Typing</div>
+      <div class="flex w-1/3 flex-col">
+        <div class="text-headline -ml-5">Crabominable</div>
+        <TypeLabel type="ice" />
         <div>Moves</div>
       </div>
       <!-- Stats section -->
@@ -32,9 +32,13 @@
 </template>
 
 <script lang="ts">
+import type { Pokemon } from "pokenode-ts"
+
 import Pokeball from "@/assets/Pokeball.vue"
 import KeyValueText from "@/components/UI/KeyValueText.vue"
 import PokemonRender from "@/components/UI/PokemonRender.vue"
+import TypeLabel from "@/components/UI/TypeLabel.vue"
+import { usePokemonStore } from "@/stores/pokemon"
 
 export default {
   name: "PlayerPokemonDetails",
@@ -42,10 +46,31 @@ export default {
     Pokeball,
     KeyValueText,
     PokemonRender,
+    TypeLabel,
   },
-  data() {
-    return {}
+  setup() {
+    return {
+      pokemonStore: usePokemonStore(),
+    }
   },
-  methods: {},
+  data(): {
+    pokemon: Pokemon | null
+  } {
+    return {
+      pokemon: null,
+    }
+  },
+  mounted() {
+    this.getPokemon()
+  },
+  methods: {
+    async getPokemon() {
+      const pokemon = await this.pokemonStore.getPokemonById(1000)
+      if (pokemon) {
+        console.log(pokemon)
+        this.pokemon = pokemon
+      }
+    },
+  },
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div
-    class="text-primary flex h-5 w-auto justify-center overflow-hidden px-3 align-middle
-      text-ellipsis whitespace-nowrap capitalize"
+    class="flex h-5 w-auto justify-center overflow-hidden px-3 align-middle text-base text-ellipsis
+      whitespace-nowrap capitalize"
     :class="[getColorClass(), textColor || 'text-white']"
     style="
       clip-path: polygon(
