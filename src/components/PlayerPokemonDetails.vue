@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 flex w-full flex-col gap-2 bg-white px-1 pt-2">
+  <div class="fixed top-0 flex w-full flex-col gap-2 bg-white px-px pt-2">
     <!-- Team selection section -->
     <div class="flex w-full justify-center gap-5">
       <Pokeball />
@@ -42,9 +42,9 @@
 <script lang="ts">
 import type { Pokemon } from "pokenode-ts"
 
-import Pokeball from "@/assets/Pokeball.vue"
 import KeyValueText from "@/components/UI/KeyValueText.vue"
 import MoveLabel from "@/components/UI/MoveLabel.vue"
+import Pokeball from "@/components/UI/Pokeball.vue"
 import PokemonRender from "@/components/UI/PokemonRender.vue"
 import TypeLabel from "@/components/UI/TypeLabel.vue"
 import { usePokemonStore } from "@/stores/pokemon"
@@ -52,11 +52,11 @@ import { usePokemonStore } from "@/stores/pokemon"
 export default {
   name: "PlayerPokemonDetails",
   components: {
-    Pokeball,
     KeyValueText,
     PokemonRender,
     TypeLabel,
     MoveLabel,
+    Pokeball,
   },
   setup() {
     return {
