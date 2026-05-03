@@ -26,6 +26,10 @@
   --color-type-dark: #5a5366;
   --color-type-fairy: #ec8fe6;
 
+  /* ------- ICONS COLORS ------- */
+  --color-buff: #fc4f82;
+  --color-debuff: #52bcf0;
+
   --font-jaldi: "Jaldi", sans-serif;
   --font-fjalla: "Fjalla One", sans-serif;
 
@@ -45,7 +49,15 @@
     font-size: var(--font-size-md-sm);
     font-weight: 400;
     letter-spacing: -0.01em;
-    line-height: 1.7;
+    line-height: 1;
+  }
+  /* ------- E.G. +1 / -1 STATS ------- */
+  .text-bold-number {
+    font-family: var(--font-jaldi);
+    font-size: var(--font-size-md-sm);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1;
   }
   /* ------- E.G. POKEMON NAME ------- */
   .text-headline {

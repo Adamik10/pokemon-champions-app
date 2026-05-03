@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex h-5" :class="widthClass">
+  <div class="relative flex" :class="widthClass">
     <DiamondText color="lilac" class="z-10 shrink-0"> {{ category }} </DiamondText>
     <DiamondText class="-ml-5 flex-1 pl-5"> {{ value }} </DiamondText>
   </div>

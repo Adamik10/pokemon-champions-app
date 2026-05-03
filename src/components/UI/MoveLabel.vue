@@ -1,9 +1,9 @@
 <template>
   <RoundedLabel>
     <TypeIcon smaller-icon type="fighting" />
-    <span class="overflow-hidden pl-1 text-base text-ellipsis whitespace-nowrap capitalize"
-      >Collision Course</span
-    >
+    <div class="h-[1em] overflow-hidden pl-1 text-base text-ellipsis whitespace-nowrap capitalize">
+      Collision Course
+    </div>
   </RoundedLabel>
 </template>
 

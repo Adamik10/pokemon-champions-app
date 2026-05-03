@@ -1,15 +1,15 @@
 <template>
   <div
-    class="flex h-5 w-auto justify-center overflow-hidden px-3 align-middle text-base text-ellipsis
-      whitespace-nowrap capitalize"
+    class="flex h-3 w-auto justify-center overflow-hidden px-2.5 align-middle text-base
+      text-ellipsis whitespace-nowrap capitalize"
     :class="[getColorClass(), textColor || 'text-white']"
     style="
       clip-path: polygon(
-        10px 0%,
-        calc(100% - 10px) 0%,
+        6px 0%,
+        calc(100% - 6px) 0%,
         100% 50%,
-        calc(100% - 10px) 100%,
-        10px 100%,
+        calc(100% - 6px) 100%,
+        6px 100%,
         0% 50%
       );
     ">
@@ -22,7 +22,7 @@
 <script lang="ts">
 import { type PropType, defineComponent } from "vue"
 
-type Color = "lilac" | "black"
+type Color = "lilac" | "black" | "grey"
 type TextColor = "white" | "black"
 
 export default defineComponent({
@@ -39,6 +39,8 @@ export default defineComponent({
       switch (this.color) {
         case "lilac":
           return "bg-base-lilac"
+        case "grey":
+          return "bg-black/25"
         case "black":
         default:
           return "bg-black/40"
