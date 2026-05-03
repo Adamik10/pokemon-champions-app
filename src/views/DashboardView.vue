@@ -1,10 +1,11 @@
 <template>
-  <PlayerPokemonDetails />
-  <OpponentPokemonDetails />
-  <div
-    class="bg-electric-blue fixed inset-0 -z-10 flex h-screen w-screen items-center justify-center
-      text-white">
-    smart stuff
+  <div class="flex h-full w-full flex-col">
+    <PlayerPokemonDetails />
+    <div
+      class="bg-electric-blue flex h-screen w-screen flex-1 items-center justify-center text-white">
+      smart stuff
+    </div>
+    <OpponentPokemonDetails />
   </div>
 </template>
 

@@ -31,3 +31,5 @@ export const stats = {
     component: SpdIcon,
   },
 }
+
+export const pokemonActionButtons = ["mega", "tera", "tailwind"]

@@ -5,6 +5,11 @@
   --color-base-lilac: #aca5fa;
   --color-base-purple: #4937a1;
   --color-grey: #585858;
+  --color-active-yellow: #ffff2e;
+  --color-active-green: #b9ff0d;
+
+  /* ------- SHADOWS ------- */
+  --shadow-active-glow: 0 0 10px 2px var(--color-active-yellow);
 
   /* ------- COLORS PER TYPE ------- */
   --color-type-normal: #9099a1;

@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 flex w-full flex-col gap-2 bg-white px-px pt-2">
+  <div class="relative flex w-full flex-col gap-2 bg-white px-0.5 pt-2 pb-3">
     <!-- Team selection -->
     <div class="flex w-full justify-center gap-4">
       <Pokeball />
@@ -36,6 +36,12 @@
         <StatsSection />
       </div>
     </div>
+    <div class="absolute -bottom-3 left-1 flex gap-1.5">
+      <ActionButton
+        v-for="actionButton in pokemonActionButtons"
+        :key="actionButton"
+        :action="actionButton" />
+    </div>
   </div>
 </template>
 
@@ -48,6 +54,8 @@ import MoveLabel from "@/components/UI/MoveLabel.vue"
 import Pokeball from "@/components/UI/Pokeball.vue"
 import PokemonRender from "@/components/UI/PokemonRender.vue"
 import TypeLabel from "@/components/UI/TypeLabel.vue"
+import ActionButton from "@/components/buttons/ActionButton.vue"
+import { pokemonActionButtons } from "@/consts/global.consts"
 import { usePokemonStore } from "@/stores/pokemon"
 
 export default {
@@ -59,10 +67,12 @@ export default {
     MoveLabel,
     Pokeball,
     StatsSection,
+    ActionButton,
   },
   setup() {
     return {
       pokemonStore: usePokemonStore(),
+      pokemonActionButtons,
     }
   },
   data(): {
