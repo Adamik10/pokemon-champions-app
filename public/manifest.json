@@ -2,7 +2,7 @@
   "name": "Champ Helper",
   "short_name": "Champ H.",
   "start_url": "/",
-  "display": "standalone",
+  "display": "fullscreen",
   "background_color": "#4922fd",
   "theme_color": "#4922fd",
   "icons": [
