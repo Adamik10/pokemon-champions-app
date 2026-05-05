@@ -6,7 +6,7 @@ import { pokeApi } from "@/services/pokeApi"
 export const usePokemonStore = defineStore("pokemon", {
   state: () => ({
     pokemon: {} as Record<string, Pokemon>,
-    playerTeam: [] as string[],
+    playerTeam: [] as Pokemon[],
     opponentTeam: [] as string[],
     loading: false,
   }),
