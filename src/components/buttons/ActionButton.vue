@@ -9,7 +9,7 @@
     }"
     @click="active = !active">
     <img
-      :src="`public/icons/${action}-icon.svg`"
+      :src="`icons/${action}-icon.svg`"
       :alt="action"
       class="h-full w-full object-contain"
       :class="{
