@@ -1,21 +1,20 @@
 // stores/modal.ts
 import { defineStore } from "pinia"
-
-export type ModalType = "add-pokemon"
+import type { Component } from "vue"
 
 export const useModalStore = defineStore("modal", {
   state: () => ({
-    activeModal: null as null | ModalType,
-    props: {} as Record<string, unknown>,
+    activeModal: null as null | Component,
+    title: null as null | string,
   }),
   actions: {
-    open(modal: ModalType, props = {}) {
-      this.activeModal = modal
-      this.props = props
+    open(component: Component, title: string) {
+      this.activeModal = component
+      this.title = title
     },
     close() {
       this.activeModal = null
-      this.props = {}
+      this.title = null
     },
   },
 })

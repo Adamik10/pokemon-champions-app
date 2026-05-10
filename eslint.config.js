@@ -1,5 +1,6 @@
 import js from "@eslint/js"
 import vue from "eslint-plugin-vue"
+import globals from "globals"
 import tseslint from "typescript-eslint"
 import vueParser from "vue-eslint-parser"
 
@@ -21,6 +22,7 @@ export default [
       parserOptions: {
         parser: tseslint.parser,
       },
+      globals: globals.browser,
     },
   },
 

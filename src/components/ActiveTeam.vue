@@ -16,6 +16,7 @@ import { defineComponent } from "vue"
 
 import ActiveTeamMiniPokemon from "@/components/ActiveTeamMiniPokemon.vue"
 import Pokeball from "@/components/UI/Pokeball.vue"
+import AddPokemonModal from "@/components/modals/AddPokemonModal.vue"
 import { useModalStore } from "@/stores/modal"
 
 export default defineComponent({
@@ -36,7 +37,7 @@ export default defineComponent({
   methods: {
     openAddPokemonModal() {
       const modal = useModalStore()
-      modal.open("add-pokemon")
+      modal.open(AddPokemonModal, "Add Your Pokémon")
     },
   },
 })

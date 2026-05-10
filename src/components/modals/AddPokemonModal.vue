@@ -1,5 +1,4 @@
 <template>
-  <h2>Add Pokémon</h2>
   <button @click="$emit('close')">Close</button>
 </template>
 

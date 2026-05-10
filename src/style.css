@@ -82,9 +82,50 @@
     text-transform: uppercase;
   }
 }
+
 body {
   background-color: var(--color-electric-blue);
   user-select: none;
+}
+
+/* ------- ANIMATIONSL ------- */
+
+/* modal backdrop */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* modal animation */
+.modal-animation {
+  animation: modal-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(80vh) scale(0.1);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.modal-animation-out {
+  animation: modal-out 0.2s ease-in forwards;
+}
+@keyframes modal-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10vh) scale(0.8);
+  }
 }
 
 @source inline(
