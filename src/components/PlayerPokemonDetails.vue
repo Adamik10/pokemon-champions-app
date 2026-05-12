@@ -6,14 +6,14 @@
     <div class="flex w-full">
       <!-- Image, ability, item section -->
       <div class="flex w-1/3 flex-col items-center gap-1">
-        <PokemonRender />
+        <PokemonRender :pokemon="activePokemon" />
         <KeyValueText
           category="Ability"
-          :value="pokemon ? 'ability' : '???'"
+          :value="activePokemon ? 'ability' : '???'"
           width-class="w-9/10 mr-auto" />
         <KeyValueText
           category="Item"
-          :value="pokemon ? 'item' : '???'"
+          :value="activePokemon ? 'item' : '???'"
           width-class="w-9/10 mr-auto" />
       </div>
       <!-- Name, typing, moves section -->
@@ -74,20 +74,16 @@ export default {
       pokemonActionButtons,
     }
   },
-  data(): {
-    pokemon: Pokemon | null
-  } {
-    return {
-      pokemon: null,
-    }
-  },
   computed: {
     activeTeam(): Pokemon[] {
       return this.pokemonStore.playerTeam
     },
+    activePokemon(): Pokemon | null {
+      return this.pokemonStore.activePokemonPlayer
+    },
   },
   mounted() {
-    this.pokemon = this.activeTeam[0] || null
+    this.activePokemon = this.pokemonStore.activePokemonPlayer
   },
   methods: {},
 }

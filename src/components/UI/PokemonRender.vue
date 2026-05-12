@@ -20,7 +20,7 @@ import { defineComponent } from "vue"
 export default defineComponent({
   name: "PokemonRender",
   props: {
-    pokemon: Object as () => Pokemon,
+    pokemon: Object as () => Pokemon | null,
   },
   data() {
     return {}
