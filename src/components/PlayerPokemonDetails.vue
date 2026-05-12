@@ -54,7 +54,7 @@ import MoveLabel from "@/components/UI/MoveLabel.vue"
 import PokemonRender from "@/components/UI/PokemonRender.vue"
 import TypeLabel from "@/components/UI/TypeLabel.vue"
 import ActionButton from "@/components/buttons/ActionButton.vue"
-import { pokemonActionButtons } from "@/consts/global.consts"
+import { pokemonActionButtons } from "@/global/global.consts"
 import { usePokemonStore } from "@/stores/pokemon"
 
 export default {

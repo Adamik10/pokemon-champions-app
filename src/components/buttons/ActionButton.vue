@@ -23,7 +23,7 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 
-import { pokemonActionButtons } from "@/consts/global.consts"
+import { pokemonActionButtons } from "@/global/global.consts"
 
 export default defineComponent({
   name: "ActionButton",

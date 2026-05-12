@@ -16,12 +16,12 @@
           <li
             v-for="pokemon in filteredPokemon"
             :key="pokemon.name"
-            class="text-headline text-base-purple flex items-center px-4 capitalize">
-            <img
-              :src="getImageUrl(pokemon)"
-              :alt="`${pokemon.name} image`"
-              class="mr-2 inline h-10 w-10 bg-cover"
-              @error="setMissingNo" />
+            class="text-headline text-base-purple flex items-center px-4 capitalize"
+            @click="addPokemonToTeam(pokemon)">
+            <PokemonSprite
+              :pokemon="pokemon"
+              :all-pokemon="allPokemon"
+              class="mr-2 inline h-10 w-10 bg-cover" />
             <span>{{ formatName(pokemon.name) }}</span>
           </li>
         </ul>
@@ -33,12 +33,20 @@
 <script lang="ts">
 import { defineComponent, nextTick } from "vue"
 
-import { type PokemonAutosuggestResult, usePokemonStore } from "@/stores/pokemon"
+import PokemonSprite from "@/components/PokemonSprite.vue"
+import type { PokemonAutosuggestResult, Side } from "@/global/gloabl.types"
+import { usePokemonStore } from "@/stores/pokemon"
 
 export default defineComponent({
   name: "AddPokemonModal",
+  components: {
+    PokemonSprite,
+  },
   props: {
-    exampleProp: String,
+    side: {
+      type: String as () => Side,
+      required: true,
+    },
   },
   emits: ["close"],
   setup() {
@@ -99,39 +107,9 @@ export default defineComponent({
       }
       return `mega ${returnName} ${megaSuffix}`
     },
-    getImageUrl(pokemon: PokemonAutosuggestResult): string {
-      const extractedId = (url: string): string => {
-        return url.split("/").filter(Boolean).pop() || ""
-      }
-      const pokemonName = pokemon.name
-      // megas + gmax forms
-      if (pokemonName.includes("-mega") || pokemonName.includes("-gmax")) {
-        const baseName = pokemonName.replace(/-mega(-[xyz])?$/, "").replace(/-gmax$/, "")
-        const basePokemon = this.allPokemon.find(p => p.name === baseName)
-        if (basePokemon && pokemonName.includes("mega")) {
-          const megaSuffix = pokemonName.match(/mega(-[xyz])?$/)?.[0] || "mega"
-          return `https://s3.pokeos.com/pokeos-uploads/assets/pokemon/home/${extractedId(basePokemon.url)}-${megaSuffix}.png?v=7`
-        }
-        if (basePokemon && pokemonName.includes("gmax")) {
-          return `https://s3.pokeos.com/pokeos-uploads/assets/pokemon/home/render/${extractedId(basePokemon.url)}-gmax.png?v=7`
-        }
-      }
-      // regional forms
-      const regionalForms = ["alola", "galar", "hisui", "paldea"]
-      const matchedForm = regionalForms.find(form => pokemonName.includes(`-${form}`))
-      if (matchedForm) {
-        const baseName = pokemonName.replace(`-${matchedForm}`, "")
-        const basePokemon = this.allPokemon.find(p => p.name === baseName)
-        if (basePokemon) {
-          return `https://s3.pokeos.com/pokeos-uploads/assets/pokemon/home/${extractedId(basePokemon.url)}-regional-${matchedForm.charAt(0)}.png?v=7`
-        }
-      }
-      // default image
-      return `https://s3.pokeos.com/pokeos-uploads/assets/pokemon/home/${extractedId(pokemon.url)}.png?v=7`
-    },
-    setMissingNo(event: Event) {
-      const target = event.target as HTMLImageElement
-      target.src = "https://www.pokeos.com/src/misc/missingno.gif"
+    addPokemonToTeam(pokemon: PokemonAutosuggestResult) {
+      this.pokemonStore.addPokemonToTeam(pokemon, this.side)
+      this.$emit("close")
     },
   },
 })

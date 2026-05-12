@@ -1,5 +1,5 @@
 // src/services/pokeApi.ts
-import { PokemonClient, UtilityClient } from "pokenode-ts"
+import { type Pokemon, PokemonClient, UtilityClient } from "pokenode-ts"
 
 const api = new PokemonClient()
 const utilityApi = new UtilityClient()
@@ -22,6 +22,9 @@ export const pokeApi = {
   },
   getPokemonSpeciesById(id: number) {
     return api.getPokemonSpeciesById(id)
+  },
+  getPokemonByUrl(url: string) {
+    return utilityApi.getResourceByUrl(url) as Promise<Pokemon>
   },
   getAllPokemon() {
     return utilityApi.getResourceByUrl(

@@ -128,6 +128,32 @@ body {
   }
 }
 
+/* random animations */
+.jump-animation {
+  animation: jump 6s ease-in-out;
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+  2% {
+    transform: translateY(-5px);
+  }
+  4% {
+    transform: translateY(0);
+  }
+  6% {
+    transform: translateY(-5px);
+  }
+  8% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 @source inline(
   "bg-type-normal bg-type-fire bg-type-water bg-type-electric bg-type-grass bg-type-ice bg-type-fighting "
     "bg-type-poison bg-type-ground bg-type-flying bg-type-psychic bg-type-bug bg-type-rock bg-type-ghost "

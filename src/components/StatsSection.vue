@@ -35,7 +35,7 @@ import { defineComponent } from "vue"
 
 import DiamondText from "@/components/UI/DiamondText.vue"
 import RoundedTable from "@/components/UI/RoundedTable.vue"
-import { stats } from "@/consts/global.consts"
+import { stats } from "@/global/global.consts"
 
 export default defineComponent({
   name: "StatsSection",

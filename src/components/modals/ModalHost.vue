@@ -21,7 +21,7 @@
           </button>
         </div>
         <div class="h-full w-full p-5">
-          <component :is="currentModal" @close="closeModal()" />
+          <component :is="currentModal" v-bind="modal.props" @close="closeModal()" />
         </div>
       </div>
     </div>
