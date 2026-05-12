@@ -3,6 +3,11 @@ import type { Pokemon } from "pokenode-ts"
 
 import { pokeApi } from "@/services/pokeApi"
 
+export type PokemonAutosuggestResult = {
+  name: string
+  url: string
+}
+
 export const usePokemonStore = defineStore("pokemon", {
   state: () => ({
     pokemon: {} as Record<string, Pokemon>,
@@ -29,8 +34,16 @@ export const usePokemonStore = defineStore("pokemon", {
       try {
         const data = await pokeApi.getPokemonById(id)
         this.pokemon[id] = data
-        console.log(data)
         return data
+      } finally {
+        this.loading = false
+      }
+    },
+    async getAllPokemon() {
+      this.loading = true
+      try {
+        const data = await pokeApi.getAllPokemon()
+        return data?.results as PokemonAutosuggestResult[]
       } finally {
         this.loading = false
       }
