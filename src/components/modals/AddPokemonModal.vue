@@ -6,7 +6,8 @@
         ref="inputRef"
         type="text"
         class="bg-base-lilac h-8 w-full px-3 text-white focus:border-0 focus:outline-0"
-        v-model="search"
+        :value="search"
+        @input="search = ($event.target as HTMLInputElement).value"
         @focus="focusHandler" />
       <div
         v-if="isAutosuggestOpen"
