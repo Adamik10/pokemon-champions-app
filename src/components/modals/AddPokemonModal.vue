@@ -1,6 +1,6 @@
 <template>
-  <div class="flex h-full w-full flex-col">
-    <div class="relative h-auto w-full">
+  <div class="flex h-[80vh] w-full flex-col">
+    <div class="relative h-full w-full">
       <input
         name="search"
         ref="inputRef"
@@ -11,9 +11,9 @@
         @focus="focusHandler" />
       <div
         v-if="isAutosuggestOpen"
-        class="border-base-lilac absolute top-8 h-auto w-full rounded-br-3xl rounded-bl-sm
-          border-t-0 border-r border-b border-l bg-white shadow-lg">
-        <ul class="flex max-h-80 flex-col overflow-y-scroll">
+        class="border-base-lilac absolute top-8 max-h-9/10 w-full overflow-y-scroll rounded-br-3xl
+          rounded-bl-sm border-t-0 border-r border-b border-l bg-white shadow-lg">
+        <ul class="flex h-full flex-col">
           <li
             v-for="pokemon in filteredPokemon"
             :key="pokemon.name"
