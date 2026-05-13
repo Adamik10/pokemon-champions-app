@@ -6,19 +6,35 @@
     <div class="flex w-full">
       <!-- Image, ability, item section -->
       <div class="flex w-1/3 flex-col items-center gap-1">
-        <PokemonRender :pokemon="activePokemon" />
+        <PokemonRender :pokemon="activePokemon?.pokemon" />
         <KeyValueText
           category="Ability"
-          :value="activePokemon ? 'ability' : '???'"
+          :value="activePokemon ? activePokemon.ability.ability.name : '???'"
           width-class="w-9/10 mr-auto" />
         <KeyValueText
           category="Item"
-          :value="activePokemon ? 'item' : '???'"
+          :value="
+            activePokemon ? (activePokemon.item ? activePokemon.item.item.name : 'Select') : '???'
+          "
           width-class="w-9/10 mr-auto" />
       </div>
       <!-- Name, typing, moves section -->
       <div class="flex w-1/3 flex-col gap-1">
-        <div class="text-headline -mb-px -ml-5">Crabominable</div>
+        <div v-if="activePokemon" class="text-headline -mb-px -ml-5 flex items-end capitalize">
+          <span
+            v-if="formatPokemonName(activePokemon.pokemon.name).prefix"
+            class="text-sm leading-none">
+            {{ formatPokemonName(activePokemon.pokemon.name).prefix }}
+          </span>
+          <span>
+            {{ formatPokemonName(activePokemon.pokemon.name).base }}
+          </span>
+          <span v-if="formatPokemonName(activePokemon.pokemon.name).suffix" class="ml-0.5">
+            {{ formatPokemonName(activePokemon.pokemon.name).suffix }}
+          </span>
+        </div>
+
+        <div v-else class="text-headline -mb-px -ml-5">???</div>
         <div class="-ml-3 flex w-full gap-1">
           <TypeLabel type="ice" />
           <TypeLabel type="fighting" />
@@ -45,8 +61,6 @@
 </template>
 
 <script lang="ts">
-import type { Pokemon } from "pokenode-ts"
-
 import ActiveTeam from "@/components/ActiveTeam.vue"
 import StatsSection from "@/components/StatsSection.vue"
 import KeyValueText from "@/components/UI/KeyValueText.vue"
@@ -54,7 +68,9 @@ import MoveLabel from "@/components/UI/MoveLabel.vue"
 import PokemonRender from "@/components/UI/PokemonRender.vue"
 import TypeLabel from "@/components/UI/TypeLabel.vue"
 import ActionButton from "@/components/buttons/ActionButton.vue"
+import type { PersonalizedPokemon } from "@/global/gloabl.types"
 import { pokemonActionButtons } from "@/global/global.consts"
+import { formatPokemonName } from "@/global/global.helper"
 import { usePokemonStore } from "@/stores/pokemon"
 
 export default {
@@ -72,13 +88,14 @@ export default {
     return {
       pokemonStore: usePokemonStore(),
       pokemonActionButtons,
+      formatPokemonName,
     }
   },
   computed: {
-    activeTeam(): Pokemon[] {
+    activeTeam(): PersonalizedPokemon[] {
       return this.pokemonStore.playerTeam
     },
-    activePokemon(): Pokemon | null {
+    activePokemon(): PersonalizedPokemon | null {
       return this.pokemonStore.activePokemonPlayer
     },
   },

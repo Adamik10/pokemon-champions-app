@@ -1,31 +1,39 @@
 import { defineStore } from "pinia"
 import type { Pokemon } from "pokenode-ts"
 
-import type { PokemonAutosuggestResult, Side } from "@/global/gloabl.types"
+import type { PersonalizedPokemon, PokemonAutosuggestResult, Side } from "@/global/gloabl.types"
 import { pokeApi } from "@/services/pokeApi"
 
 export const usePokemonStore = defineStore("pokemon", {
   state: () => ({
     pokemon: {} as Record<string, Pokemon>,
-    playerTeam: [] as Pokemon[],
-    opponentTeam: [] as string[],
-    activePokemonPlayer: null as Pokemon | null,
-    activePokemonOpponent: null as Pokemon | null,
+    playerTeam: [] as PersonalizedPokemon[],
+    opponentTeam: [] as PersonalizedPokemon[],
+    activePokemonPlayer: null as PersonalizedPokemon | null,
+    activePokemonOpponent: null as PersonalizedPokemon | null,
     loading: false,
   }),
 
   actions: {
-    async addPokemonToTeam(pokemon: PokemonAutosuggestResult, team: Side) {
-      const data = await pokeApi.getPokemonByUrl(pokemon.url)
-      if (team === "player") {
-        this.playerTeam.push(data)
-        this.activePokemonPlayer = data
-      } else if (team === "opponent") {
-        this.opponentTeam.push(data.name)
-        this.activePokemonOpponent = data
+    initPokemon(pokemon: Pokemon): PersonalizedPokemon {
+      return {
+        pokemon: pokemon,
+        ability: pokemon.abilities[0],
+        item: null,
       }
     },
-    setActivePokemon(pokemon: Pokemon, team: Side) {
+    async addPokemonToTeam(pokemon: PokemonAutosuggestResult, team: Side) {
+      const data = await pokeApi.getPokemonByUrl(pokemon.url)
+      const initializedPokemon = this.initPokemon(data)
+      if (team === "player") {
+        this.playerTeam.push(initializedPokemon)
+        this.activePokemonPlayer = initializedPokemon
+      } else if (team === "opponent") {
+        this.opponentTeam.push(initializedPokemon)
+        this.activePokemonOpponent = initializedPokemon
+      }
+    },
+    setActivePokemon(pokemon: PersonalizedPokemon, team: Side) {
       if (team === "player") {
         this.activePokemonPlayer = pokemon
       } else if (team === "opponent") {

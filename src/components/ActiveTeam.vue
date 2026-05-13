@@ -3,17 +3,17 @@
     <template v-for="index in 6" :key="index">
       <div v-if="team && team[index - 1]" class="relative aspect-square w-6.5">
         <div
-          v-if="isSelected(team[index - 1].id)"
+          v-if="isSelected(team[index - 1].pokemon.id)"
           class="absolute inset-0 rounded-full
             bg-[radial-gradient(circle,var(--color-active-green)_0%,transparent_80%)]" />
         <PokemonSprite
-          :pokemon="team[index - 1]"
+          :pokemon="team[index - 1].pokemon"
           @click="pokemonStore.setActivePokemon(team[index - 1], 'player')"
           class="relative h-auto w-full"
           :class="[
             {
-              'jump-animation': isSelected(team[index - 1].id),
-              'opacity-50': !isSelected(team[index - 1].id),
+              'jump-animation': isSelected(team[index - 1].pokemon.id),
+              'opacity-50': !isSelected(team[index - 1].pokemon.id),
             },
           ]" />
       </div>
@@ -63,7 +63,7 @@ export default defineComponent({
       modal.open(AddPokemonModal, "Add Your Pokémon", { side: "player" })
     },
     isSelected(pokemonId: number): boolean {
-      return this.activePokemon ? this.activePokemon.id === pokemonId : false
+      return this.activePokemon ? this.activePokemon.pokemon.id === pokemonId : false
     },
   },
 })

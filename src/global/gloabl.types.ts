@@ -8,3 +8,9 @@ export type PokemonAutosuggestResult = {
 }
 
 export type SpritePokemon = Pokemon | PokemonAutosuggestResult
+
+export type PersonalizedPokemon = {
+  pokemon: Pokemon
+  ability: Pokemon["abilities"][0]
+  item: Pokemon["held_items"][0] | null
+}

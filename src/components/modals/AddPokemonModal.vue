@@ -23,7 +23,17 @@
               :pokemon="pokemon"
               :all-pokemon="allPokemon"
               class="mr-2 inline h-10 w-10 bg-cover" />
-            <span>{{ formatName(pokemon.name) }}</span>
+            <div class="flex items-end gap-1">
+              <span v-if="formatPokemonName(pokemon.name).prefix" class="text-xs leading-none">
+                {{ formatPokemonName(pokemon.name).prefix }}
+              </span>
+              <span>
+                {{ formatPokemonName(pokemon.name).base }}
+              </span>
+              <span v-if="formatPokemonName(pokemon.name).suffix">
+                {{ formatPokemonName(pokemon.name).suffix }}
+              </span>
+            </div>
           </li>
         </ul>
       </div>
@@ -36,6 +46,7 @@ import { defineComponent, nextTick } from "vue"
 
 import PokemonSprite from "@/components/PokemonSprite.vue"
 import type { PokemonAutosuggestResult, Side } from "@/global/gloabl.types"
+import { formatPokemonName } from "@/global/global.helper"
 import { usePokemonStore } from "@/stores/pokemon"
 
 export default defineComponent({
@@ -52,6 +63,7 @@ export default defineComponent({
   emits: ["close"],
   setup() {
     return {
+      formatPokemonName,
       pokemonStore: usePokemonStore(),
     }
   },
@@ -94,19 +106,6 @@ export default defineComponent({
     },
     focusHandler() {
       this.isAutosuggestOpen = true
-    },
-    formatName(name: string): string {
-      const parts = name.split("-")
-      const megaIndex = parts.indexOf("mega")
-      if (megaIndex === -1) {
-        return parts.join(" ")
-      }
-      const returnName = parts.slice(0, megaIndex).join(" ")
-      const megaSuffix = parts.slice(megaIndex + 1).join(" ")
-      if (!megaSuffix) {
-        return `mega ${returnName}`
-      }
-      return `mega ${returnName} ${megaSuffix}`
     },
     addPokemonToTeam(pokemon: PokemonAutosuggestResult) {
       this.pokemonStore.addPokemonToTeam(pokemon, this.side)
