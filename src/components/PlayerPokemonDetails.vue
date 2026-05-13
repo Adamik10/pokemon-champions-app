@@ -2,9 +2,9 @@
   <div class="relative flex w-full flex-col gap-2 bg-white px-0.5 pt-2 pb-3">
     <!-- Team selection -->
     <ActiveTeam :team="activeTeam" />
-    <!-- Pokemon details -->
+
     <div class="flex w-full">
-      <!-- Image, ability, item section -->
+      <!-- Image -->
       <div class="flex w-1/3 flex-col items-center gap-1">
         <PokemonRender :pokemon="activePokemon?.pokemon" />
         <KeyValueText
@@ -18,7 +18,8 @@
           "
           width-class="w-9/10 mr-auto" />
       </div>
-      <!-- Name, typing, moves section -->
+
+      <!-- Name -->
       <div class="flex w-1/3 flex-col gap-1">
         <div
           v-if="activePokemon"
@@ -36,9 +37,11 @@
           </span>
         </div>
         <div v-else class="text-headline -mb-px -ml-5">???</div>
+
+        <!-- Typing -->
         <div class="-ml-3 flex w-full gap-1">
-          <TypeLabel type="ice" />
-          <TypeLabel type="fighting" />
+          <TypeLabel v-if="activePokemonPrimaryType" :type="activePokemonPrimaryType" />
+          <TypeLabel v-if="activePokemonSecondaryType" :type="activePokemonSecondaryType" />
         </div>
         <div class="mt-1 flex w-9/10 flex-col gap-1.5">
           <MoveLabel />
@@ -67,6 +70,7 @@ import StatsSection from "@/components/StatsSection.vue"
 import KeyValueText from "@/components/UI/KeyValueText.vue"
 import MoveLabel from "@/components/UI/MoveLabel.vue"
 import PokemonRender from "@/components/UI/PokemonRender.vue"
+import type { PokemonType } from "@/components/UI/TypeIcon.vue"
 import TypeLabel from "@/components/UI/TypeLabel.vue"
 import ActionButton from "@/components/buttons/ActionButton.vue"
 import type { PersonalizedPokemon } from "@/global/gloabl.types"
@@ -98,6 +102,13 @@ export default {
     },
     activePokemon(): PersonalizedPokemon | null {
       return this.pokemonStore.activePokemonPlayer
+    },
+    activePokemonPrimaryType(): PokemonType {
+      return this.activePokemon?.pokemon.types[0].type.name as PokemonType
+    },
+    activePokemonSecondaryType(): PokemonType | null {
+      if (!this.activePokemon?.pokemon.types[1]) return null
+      return this.activePokemon?.pokemon.types[1]?.type.name as PokemonType
     },
   },
   mounted() {
