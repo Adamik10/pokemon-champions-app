@@ -8,8 +8,8 @@
       <div class="flex w-1/3 flex-col items-center gap-1">
         <PokemonRender :pokemon="activePokemon?.pokemon" />
         <KeyValueText
-          category="Ability"
-          :value="activePokemon ? activePokemon.ability.ability.name : '???'"
+          category="ability"
+          :value="activePokemon ? activePokemon.ability.ability.name.replace('-', ' ') : '???'"
           width-class="w-9/10 mr-auto" />
         <KeyValueText
           category="Item"
@@ -20,7 +20,9 @@
       </div>
       <!-- Name, typing, moves section -->
       <div class="flex w-1/3 flex-col gap-1">
-        <div v-if="activePokemon" class="text-headline -mb-px -ml-5 flex items-end capitalize">
+        <div
+          v-if="activePokemon"
+          class="text-headline -mb-px -ml-5 flex items-end overflow-hidden capitalize">
           <span
             v-if="formatPokemonName(activePokemon.pokemon.name).prefix"
             class="text-sm leading-none">
@@ -33,7 +35,6 @@
             {{ formatPokemonName(activePokemon.pokemon.name).suffix }}
           </span>
         </div>
-
         <div v-else class="text-headline -mb-px -ml-5">???</div>
         <div class="-ml-3 flex w-full gap-1">
           <TypeLabel type="ice" />
