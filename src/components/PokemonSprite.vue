@@ -1,12 +1,12 @@
 <template>
-  <img :src="spriteUrl" :alt="pokemon.name" @error="setMissingNo" />
+  <img :src="currentSrc" :alt="pokemon.name" @error="handleError" />
 </template>
 
 <script lang="ts">
 import type { Pokemon } from "pokenode-ts"
 import { defineComponent } from "vue"
 
-import { getPokemonSpriteUrl } from "@/components/PokemonSprite.helper"
+import { getPokemonImageUrl } from "@/components/PokemonSprite.helper"
 import type { PokemonAutosuggestResult } from "@/global/gloabl.types"
 
 export default defineComponent({
@@ -21,15 +21,35 @@ export default defineComponent({
       required: false,
     },
   },
+  data() {
+    return {
+      imageIndex: 0,
+    }
+  },
   computed: {
-    spriteUrl(): string {
-      return getPokemonSpriteUrl(this.pokemon, this.allPokemon)
+    imageUrls(): string[] {
+      return getPokemonImageUrl(this.pokemon, "sprite", this.allPokemon)
+    },
+    currentSrc(): string {
+      return this.imageUrls[this.imageIndex]
+    },
+  },
+  watch: {
+    pokemon: {
+      immediate: true,
+      handler() {
+        this.imageIndex = 0
+      },
     },
   },
   methods: {
-    setMissingNo(event: Event) {
+    handleError(event: Event) {
       const target = event.target as HTMLImageElement
-      target.src = "https://www.pokeos.com/src/misc/missingno.gif"
+
+      if (this.imageIndex < this.imageUrls.length - 1) {
+        this.imageIndex++
+        target.src = this.currentSrc
+      }
     },
   },
 })
