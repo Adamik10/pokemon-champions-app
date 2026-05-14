@@ -1,9 +1,10 @@
 <template>
   <div
     class="flex aspect-square h-full justify-center rounded-xs align-middle"
-    :class="`bg-type-${type}`">
+    :class="type ? `bg-type-${type.toLocaleLowerCase()}` : 'bg-white/20'">
     <img
-      :src="`/icons/type-${type}.png`"
+      v-if="type"
+      :src="`/icons/type-${type.toLocaleLowerCase()}.png`"
       alt="typing"
       class="aspect-square w-auto"
       :class="smallerIcon ? 'm-auto h-8/10' : 'h-full'" />
@@ -36,7 +37,7 @@ export type PokemonType =
 export default defineComponent({
   name: "TypeIcon",
   props: {
-    type: String as () => PokemonType,
+    type: String as () => PokemonType | undefined,
     smallerIcon: Boolean,
   },
   data() {

@@ -3,8 +3,8 @@
     <TypeIcon :type="type" />
     <span
       class="text-label w-fit px-0.5 text-white"
-      :class="type && type.length > 5 ? 'px-0.5' : 'px-3'">
-      {{ type }}
+      :class="type ? (type.length > 4 ? 'px-0.5' : 'px-2') : 'px-4'">
+      {{ type ?? "-" }}
     </span>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default defineComponent({
     TypeIcon,
   },
   props: {
-    type: String as () => PokemonType,
+    type: String as () => PokemonType | undefined,
   },
   data() {
     return {}

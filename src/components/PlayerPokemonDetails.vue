@@ -9,12 +9,12 @@
         <PokemonRender :pokemon="activePokemon?.pokemon" />
         <KeyValueText
           category="ability"
-          :value="activePokemon ? activePokemon.ability.ability.name.replace('-', ' ') : '???'"
+          :value="activePokemon ? activePokemon.ability.ability.name.replace('-', ' ') : '-'"
           width-class="w-9/10 mr-auto" />
         <KeyValueText
           category="Item"
           :value="
-            activePokemon ? (activePokemon.item ? activePokemon.item.item.name : 'Select') : '???'
+            activePokemon ? (activePokemon.item ? activePokemon.item.item.name : 'Select') : '-'
           "
           width-class="w-9/10 mr-auto" />
       </div>
@@ -40,8 +40,8 @@
 
         <!-- Typing -->
         <div class="-ml-3 flex w-full gap-1">
-          <TypeLabel v-if="activePokemonPrimaryType" :type="activePokemonPrimaryType" />
-          <TypeLabel v-if="activePokemonSecondaryType" :type="activePokemonSecondaryType" />
+          <TypeLabel :type="activePokemonPrimaryType || undefined" />
+          <TypeLabel :type="activePokemonSecondaryType || undefined" />
         </div>
         <div class="mt-1 flex w-9/10 flex-col gap-1.5">
           <MoveLabel />
