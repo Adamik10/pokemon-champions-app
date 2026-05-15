@@ -1,7 +1,8 @@
 import { defineStore } from "pinia"
-import type { Pokemon } from "pokenode-ts"
+import type { NamedAPIResourceList, Pokemon } from "pokenode-ts"
 
-import type { PersonalizedPokemon, PokemonAutosuggestResult, Side } from "@/global/gloabl.types"
+import type { PersonalizedPokemon, Side } from "@/global/gloabl.types"
+import { itemApi } from "@/services/itemApi"
 import { pokeApi } from "@/services/pokeApi"
 
 export const usePokemonStore = defineStore("pokemon", {
@@ -15,6 +16,7 @@ export const usePokemonStore = defineStore("pokemon", {
   }),
 
   actions: {
+    // ---------------- Pokemon -----------------
     initPokemon(pokemon: Pokemon): PersonalizedPokemon {
       return {
         pokemon: pokemon,
@@ -22,7 +24,7 @@ export const usePokemonStore = defineStore("pokemon", {
         item: null,
       }
     },
-    async addPokemonToTeam(pokemon: PokemonAutosuggestResult, team: Side) {
+    async addPokemonToTeam(pokemon: NamedAPIResourceList["results"][0], team: Side) {
       const data = await pokeApi.getPokemonByUrl(pokemon.url)
       const initializedPokemon = this.initPokemon(data)
       if (team === "player") {
@@ -66,9 +68,30 @@ export const usePokemonStore = defineStore("pokemon", {
       this.loading = true
       try {
         const data = await pokeApi.getAllPokemon()
-        return data?.results as PokemonAutosuggestResult[]
+        return data?.results as NamedAPIResourceList["results"][0][]
       } finally {
         this.loading = false
+      }
+    },
+    // ---------------- Items -----------------
+    async getAllItems() {
+      this.loading = true
+      try {
+        const data = await itemApi.getAllItems()
+        return data?.results as NamedAPIResourceList["results"][0][]
+      } finally {
+        this.loading = false
+      }
+    },
+    async addItemToActivePokemon(item: NamedAPIResourceList["results"][0], team: Side) {
+      if (!this.activePokemonPlayer) {
+        return
+      }
+      const data = await itemApi.getItemByName(item.name)
+      if (team === "player") {
+        this.activePokemonPlayer.item = data
+      } else if (team === "opponent") {
+        this.activePokemonOpponent!.item = data
       }
     },
   },

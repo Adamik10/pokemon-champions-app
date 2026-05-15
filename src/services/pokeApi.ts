@@ -1,17 +1,7 @@
-// src/services/pokeApi.ts
-import { type Pokemon, PokemonClient, UtilityClient } from "pokenode-ts"
+import { type NamedAPIResourceList, type Pokemon, PokemonClient, UtilityClient } from "pokenode-ts"
 
 const api = new PokemonClient()
 const utilityApi = new UtilityClient()
-export type getAllPokemonResponse = {
-  count: number
-  next: string | null
-  previous: string | null
-  results: {
-    name: String
-    url: String
-  }[]
-}
 
 export const pokeApi = {
   getPokemonByName(name: string) {
@@ -29,6 +19,6 @@ export const pokeApi = {
   getAllPokemon() {
     return utilityApi.getResourceByUrl(
       "https://pokeapi.co/api/v2/pokemon/?limit=20000"
-    ) as Promise<getAllPokemonResponse>
+    ) as Promise<NamedAPIResourceList>
   },
 }

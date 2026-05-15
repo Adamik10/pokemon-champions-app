@@ -15,24 +15,13 @@
           rounded-bl-sm border-t-0 border-r border-b border-l bg-white shadow-lg">
         <ul class="flex h-full flex-col">
           <li
-            v-for="pokemon in filteredPokemon"
-            :key="pokemon.name"
-            class="text-headline text-base-purple flex items-center px-4 capitalize"
-            @click="addPokemonToTeam(pokemon)">
-            <PokemonSprite
-              :pokemon="pokemon"
-              :all-pokemon="allPokemon"
-              class="mr-2 inline h-10 w-10 bg-cover" />
+            v-for="(item, index) in filteredItems"
+            :key="item.name"
+            class="text-headline text-base-purple flex items-center px-4 py-0.5 capitalize"
+            :class="index % 2 === 0 ? 'bg-base-lilac/10' : ''"
+            @click="addItemToActivePokemon(item)">
             <div class="flex items-end gap-1">
-              <span v-if="formatPokemonName(pokemon.name).prefix" class="text-xs leading-none">
-                {{ formatPokemonName(pokemon.name).prefix }}
-              </span>
-              <span>
-                {{ formatPokemonName(pokemon.name).base }}
-              </span>
-              <span v-if="formatPokemonName(pokemon.name).suffix">
-                {{ formatPokemonName(pokemon.name).suffix }}
-              </span>
+              <span>{{ item.name.replace("-", " ") }}</span>
             </div>
           </li>
         </ul>
@@ -47,11 +36,10 @@ import { defineComponent, nextTick } from "vue"
 
 import PokemonSprite from "@/components/PokemonSprite.vue"
 import type { Side } from "@/global/gloabl.types"
-import { formatPokemonName } from "@/global/global.helper"
 import { usePokemonStore } from "@/stores/pokemon"
 
 export default defineComponent({
-  name: "AddPokemonModal",
+  name: "EditItemModal",
   components: {
     PokemonSprite,
   },
@@ -64,7 +52,6 @@ export default defineComponent({
   emits: ["close"],
   setup() {
     return {
-      formatPokemonName,
       pokemonStore: usePokemonStore(),
     }
   },
@@ -72,37 +59,34 @@ export default defineComponent({
     return {
       isLoading: false,
       isAutosuggestOpen: false,
-      allPokemon: [] as NamedAPIResourceList["results"][0][],
+      allItems: [] as NamedAPIResourceList["results"][0][],
       search: "",
     }
   },
   computed: {
-    filteredPokemon(): NamedAPIResourceList["results"][0][] {
+    filteredItems(): NamedAPIResourceList["results"][0][] {
       if (!this.search) {
-        return this.allPokemon
+        return this.allItems
       }
-      return this.allPokemon.filter(pokemon =>
-        pokemon.name
-          .toLowerCase()
-          .replace(/(?<!mo)-(?!o)/g, " ")
-          .includes(this.search.toLowerCase())
+      return this.allItems.filter(item =>
+        item.name.toLowerCase().replace("-", " ").includes(this.search.toLowerCase())
       )
     },
   },
   mounted() {
-    this.getAllPokemon()
+    this.getallItems()
     nextTick(() => {
       const input = this.$refs.inputRef as HTMLInputElement
       input?.focus()
     })
   },
   methods: {
-    getAllPokemon() {
+    getallItems() {
       this.isLoading = true
       this.pokemonStore
-        .getAllPokemon()
+        .getAllItems()
         .then(data => {
-          this.allPokemon = data
+          this.allItems = data
         })
         .finally(() => {
           this.isLoading = false
@@ -111,8 +95,8 @@ export default defineComponent({
     focusHandler() {
       this.isAutosuggestOpen = true
     },
-    addPokemonToTeam(pokemon: NamedAPIResourceList["results"][0]) {
-      this.pokemonStore.addPokemonToTeam(pokemon, this.side)
+    addItemToActivePokemon(item: NamedAPIResourceList["results"][0]) {
+      this.pokemonStore.addItemToActivePokemon(item, this.side)
       this.$emit("close")
     },
   },

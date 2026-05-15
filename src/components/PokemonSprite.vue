@@ -3,21 +3,20 @@
 </template>
 
 <script lang="ts">
-import type { Pokemon } from "pokenode-ts"
+import type { NamedAPIResourceList, Pokemon } from "pokenode-ts"
 import { defineComponent } from "vue"
 
 import { getPokemonImageUrl } from "@/components/PokemonSprite.helper"
-import type { PokemonAutosuggestResult } from "@/global/gloabl.types"
 
 export default defineComponent({
   name: "PokemonSprite",
   props: {
     pokemon: {
-      type: Object as () => Pokemon | PokemonAutosuggestResult,
+      type: Object as () => Pokemon | NamedAPIResourceList["results"][0],
       required: true,
     },
     allPokemon: {
-      type: Array as () => PokemonAutosuggestResult[],
+      type: Array as () => NamedAPIResourceList["results"][0][],
       required: false,
     },
   },

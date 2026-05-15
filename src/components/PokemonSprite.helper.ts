@@ -1,11 +1,13 @@
-import type { PokemonAutosuggestResult, SpritePokemon } from "@/global/gloabl.types"
+import type { NamedAPIResourceList } from "pokenode-ts"
+
+import type { SpritePokemon } from "@/global/gloabl.types"
 
 type PokemonImageType = "sprite" | "render" | "animated-render"
 
 export function getPokemonImageUrl(
   pokemon: SpritePokemon,
   type: PokemonImageType = "sprite",
-  allPokemon?: PokemonAutosuggestResult[]
+  allPokemon?: NamedAPIResourceList["results"][0][]
 ): string[] {
   const extractedId = (url: string): string => {
     return url.split("/").filter(Boolean).pop() || ""

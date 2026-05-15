@@ -14,8 +14,9 @@
         <KeyValueText
           category="Item"
           :value="
-            activePokemon ? (activePokemon.item ? activePokemon.item.item.name : 'Select') : '-'
+            activePokemon ? (activePokemon.item ? activePokemon.item.name : 'Select item') : '-'
           "
+          @click="openEditItemModal()"
           width-class="w-9/10 mr-auto" />
       </div>
 
@@ -41,7 +42,9 @@
         <!-- Typing -->
         <div class="-ml-3 flex w-full gap-1">
           <TypeLabel :type="activePokemonPrimaryType || undefined" />
-          <TypeLabel :type="activePokemonSecondaryType || undefined" />
+          <TypeLabel
+            v-if="!activePokemon || activePokemonSecondaryType"
+            :type="activePokemonSecondaryType || undefined" />
         </div>
         <div class="mt-1 flex w-9/10 flex-col gap-1.5">
           <MoveLabel />
@@ -76,7 +79,10 @@ import ActionButton from "@/components/buttons/ActionButton.vue"
 import type { PersonalizedPokemon } from "@/global/gloabl.types"
 import { pokemonActionButtons } from "@/global/global.consts"
 import { formatPokemonName } from "@/global/global.helper"
+import { useModalStore } from "@/stores/modal"
 import { usePokemonStore } from "@/stores/pokemon"
+
+import EditItemModal from "./modals/EditItemModal.vue"
 
 export default {
   name: "PlayerPokemonDetails",
@@ -88,6 +94,7 @@ export default {
     StatsSection,
     ActionButton,
     ActiveTeam,
+    EditItemModal,
   },
   setup() {
     return {
@@ -114,6 +121,11 @@ export default {
   mounted() {
     this.activePokemon = this.pokemonStore.activePokemonPlayer
   },
-  methods: {},
+  methods: {
+    openEditItemModal() {
+      const modal = useModalStore()
+      modal.open(EditItemModal, "Select held item", { side: "player" })
+    },
+  },
 }
 </script>
