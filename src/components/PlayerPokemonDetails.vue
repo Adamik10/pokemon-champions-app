@@ -14,7 +14,11 @@
         <KeyValueText
           category="Item"
           :value="
-            activePokemon ? (activePokemon.item ? activePokemon.item.name : 'Select item') : '-'
+            activePokemon
+              ? activePokemon.item
+                ? activePokemon.item.name.replace('-', ' ')
+                : 'Select item'
+              : '-'
           "
           @click="openEditItemModal()"
           width-class="w-9/10 mr-auto" />
