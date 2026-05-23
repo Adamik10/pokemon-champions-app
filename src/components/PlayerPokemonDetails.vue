@@ -6,7 +6,25 @@
     <div class="flex w-full">
       <!-- Image -->
       <div class="flex w-1/3 flex-col items-center gap-1">
-        <PokemonRender :pokemon="activePokemon?.pokemon" />
+        <div class="relative aspect-square w-3/4 max-w-3/4 items-center justify-center">
+          <PokemonRender :pokemon="activePokemon?.pokemon" />
+          <div
+            v-if="activePokemon"
+            class="bg-base-lilac absolute -right-2 bottom-0 flex h-8 w-8 items-center justify-center
+              overflow-visible rounded-full border-2 border-white">
+            <img
+              v-if="activePokemon?.item"
+              :src="activePokemon.item.sprites.default"
+              :alt="
+                activePokemon.item.names.find(name => name.language.name === 'en')?.name ||
+                activePokemon.item.name ||
+                'item image'
+              "
+              @click="openEditItemModal()" />
+            <PlusIcon v-else @click="openEditItemModal()" />
+          </div>
+        </div>
+
         <KeyValueText
           category="ability"
           :value="activePokemon ? activePokemon.ability.ability.name.replace('-', ' ') : '-'"
@@ -72,6 +90,7 @@
 </template>
 
 <script lang="ts">
+import PlusIcon from "@/assets/PlusIcon.vue"
 import ActiveTeam from "@/components/ActiveTeam.vue"
 import StatsSection from "@/components/StatsSection.vue"
 import KeyValueText from "@/components/UI/KeyValueText.vue"
@@ -99,6 +118,7 @@ export default {
     ActionButton,
     ActiveTeam,
     EditItemModal,
+    PlusIcon,
   },
   setup() {
     return {

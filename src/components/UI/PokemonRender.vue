@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-base-lilac relative flex aspect-square w-3/4 max-w-3/4 items-center justify-center
+    class="bg-base-lilac relative flex aspect-square w-full items-center justify-center
       rounded-full">
     <div v-if="isLoading" class="absolute inset-0 flex items-center justify-center">
       <div
