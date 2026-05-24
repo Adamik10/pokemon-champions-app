@@ -12,4 +12,7 @@ export const itemApi = {
   getItemByName(name: string) {
     return api.getItemByName(name)
   },
+  getItemCategoryByName(name: string) {
+    return api.getItemCategoryByName(name)
+  },
 }

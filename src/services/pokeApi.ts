@@ -13,6 +13,9 @@ export const pokeApi = {
   getPokemonSpeciesById(id: number) {
     return api.getPokemonSpeciesById(id)
   },
+  getPokemonSpeciesByName(name: string) {
+    return api.getPokemonSpeciesByName(name)
+  },
   getPokemonByUrl(url: string) {
     return utilityApi.getResourceByUrl(url) as Promise<Pokemon>
   },
