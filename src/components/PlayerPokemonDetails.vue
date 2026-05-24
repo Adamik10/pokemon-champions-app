@@ -27,7 +27,11 @@
         <!-- Ability + Item -->
         <KeyValueText
           category="ability"
-          :value="activePokemon ? activePokemon.ability.ability.name.replace('-', ' ') : '-'"
+          :value="
+            activePokemon?.ability?.ability
+              ? activePokemon?.ability?.ability.name.replace('-', ' ')
+              : '-'
+          "
           width-class="w-9/10 mr-auto" />
         <KeyValueText
           category="Item"
