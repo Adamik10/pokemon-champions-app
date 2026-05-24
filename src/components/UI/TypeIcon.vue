@@ -1,7 +1,9 @@
 <template>
   <div
     class="flex aspect-square h-full justify-center rounded-xs align-middle"
-    :class="type ? `bg-type-${type.toLocaleLowerCase()}` : 'bg-white/20'">
+    :class="
+      type ? `bg-type-${type.toLocaleLowerCase()}` : `${emptyStateColorClass || 'bg-white/20'}`
+    ">
     <img
       v-if="type"
       :src="`/icons/type-${type.toLocaleLowerCase()}.png`"
@@ -39,6 +41,7 @@ export default defineComponent({
   props: {
     type: String as () => PokemonType | undefined,
     smallerIcon: Boolean,
+    emptyStateColorClass: String,
   },
   data() {
     return {}

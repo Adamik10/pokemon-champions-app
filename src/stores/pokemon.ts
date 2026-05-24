@@ -3,6 +3,7 @@ import type { NamedAPIResourceList, Pokemon } from "pokenode-ts"
 
 import type { PersonalizedPokemon, Side } from "@/global/gloabl.types"
 import { itemApi } from "@/services/itemApi"
+import { moveApi } from "@/services/moveApi"
 import { pokeApi } from "@/services/pokeApi"
 
 export const usePokemonStore = defineStore("pokemon", {
@@ -22,6 +23,7 @@ export const usePokemonStore = defineStore("pokemon", {
         pokemon: pokemon,
         ability: pokemon.abilities[0],
         item: null,
+        moves: [],
       }
     },
     async addPokemonToTeam(pokemon: NamedAPIResourceList["results"][0], team: Side) {
@@ -93,6 +95,34 @@ export const usePokemonStore = defineStore("pokemon", {
       } else if (team === "opponent") {
         this.activePokemonOpponent!.item = data
       }
+    },
+    // ---------------- Moves -----------------
+    async getAllMoves() {
+      this.loading = true
+      try {
+        const data = await moveApi.getAllMoves()
+        return data?.results as NamedAPIResourceList["results"][0][]
+      } finally {
+        this.loading = false
+      }
+    },
+    async addMoveToActivePokemon(
+      move: NamedAPIResourceList["results"][0],
+      team: Side,
+      moveSlot: number
+    ): Promise<Boolean> {
+      if (!this.activePokemonPlayer) return false
+      const data = await moveApi.getMoveByName(move.name)
+      console.log({ data })
+
+      if (!data) return false
+      if (team === "player") {
+        this.activePokemonPlayer.moves[moveSlot - 1] = data
+      } else if (team === "opponent") {
+        this.activePokemonOpponent!.moves[moveSlot - 1] = data
+      }
+      console.log("added move", this.activePokemonPlayer)
+      return true
     },
   },
 })

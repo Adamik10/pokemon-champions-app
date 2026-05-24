@@ -1,4 +1,4 @@
-import type { Item, NamedAPIResourceList, Pokemon } from "pokenode-ts"
+import type { Item, Move, NamedAPIResourceList, Pokemon } from "pokenode-ts"
 
 export type Side = "player" | "opponent"
 
@@ -8,4 +8,5 @@ export type PersonalizedPokemon = {
   pokemon: Pokemon
   ability: Pokemon["abilities"][0]
   item: Item | null
+  moves: Move[]
 }

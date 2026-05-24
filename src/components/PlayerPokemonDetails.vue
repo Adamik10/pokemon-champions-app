@@ -24,7 +24,7 @@
             <PlusIcon v-else @click="openEditItemModal()" />
           </div>
         </div>
-
+        <!-- Ability + Item -->
         <KeyValueText
           category="ability"
           :value="activePokemon ? activePokemon.ability.ability.name.replace('-', ' ') : '-'"
@@ -68,11 +68,16 @@
             v-if="!activePokemon || activePokemonSecondaryType"
             :type="activePokemonSecondaryType || undefined" />
         </div>
+
+        <!-- Moves -->
         <div class="mt-1 flex w-9/10 flex-col gap-1.5">
-          <MoveLabel />
-          <MoveLabel />
-          <MoveLabel />
-          <MoveLabel />
+          <MoveLabel
+            v-for="move in 4"
+            :key="move"
+            :move-slot="move"
+            :move="activePokemon?.moves[move - 1]"
+            team="player"
+            :pokemon="activePokemon?.pokemon" />
         </div>
       </div>
       <!-- Stats section -->
