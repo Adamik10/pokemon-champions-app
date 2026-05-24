@@ -123,15 +123,12 @@ export const usePokemonStore = defineStore("pokemon", {
     ): Promise<Boolean> {
       if (!this.activePokemonPlayer) return false
       const data = await moveApi.getMoveByName(move.name)
-      console.log({ data })
-
       if (!data) return false
       if (team === "player") {
         this.activePokemonPlayer.moves[moveSlot - 1] = data
       } else if (team === "opponent") {
         this.activePokemonOpponent!.moves[moveSlot - 1] = data
       }
-      console.log("added move", this.activePokemonPlayer)
       return true
     },
   },
