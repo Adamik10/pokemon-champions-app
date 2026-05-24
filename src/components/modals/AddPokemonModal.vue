@@ -7,13 +7,17 @@
         type="text"
         class="bg-base-lilac h-8 w-full px-3 text-white focus:border-0 focus:outline-0"
         :value="search"
+        :disabled="isLoading"
         @input="search = ($event.target as HTMLInputElement).value"
         @focus="focusHandler" />
       <div
         v-if="isAutosuggestOpen"
         class="border-base-lilac absolute top-8 max-h-9/10 w-full overflow-y-scroll rounded-br-3xl
           rounded-bl-sm border-t-0 border-r border-b border-l bg-white shadow-lg">
-        <ul class="flex h-full flex-col">
+        <div v-if="isLoading" class="flex min-h-32 items-center justify-center">
+          <LoadingSpinner color="base-lilac" />
+        </div>
+        <ul v-else class="flex h-full flex-col">
           <li
             v-for="pokemon in filteredPokemon"
             :key="pokemon.name"
@@ -46,6 +50,7 @@ import type { NamedAPIResourceList } from "pokenode-ts"
 import { defineComponent, nextTick } from "vue"
 
 import PokemonSprite from "@/components/PokemonSprite.vue"
+import LoadingSpinner from "@/components/UI/LoadingSpinner.vue"
 import type { Side } from "@/global/gloabl.types"
 import { formatPokemonName } from "@/global/global.helper"
 import { usePokemonStore } from "@/stores/pokemon"
@@ -54,6 +59,7 @@ export default defineComponent({
   name: "AddPokemonModal",
   components: {
     PokemonSprite,
+    LoadingSpinner,
   },
   props: {
     side: {
@@ -71,7 +77,7 @@ export default defineComponent({
   data() {
     return {
       isLoading: false,
-      isAutosuggestOpen: false,
+      isAutosuggestOpen: true,
       allPokemon: [] as NamedAPIResourceList["results"][0][],
       search: "",
     }
@@ -92,9 +98,17 @@ export default defineComponent({
   mounted() {
     this.getAllPokemon()
     nextTick(() => {
-      const input = this.$refs.inputRef as HTMLInputElement
-      input?.focus()
+      this.focusInput()
     })
+  },
+  watch: {
+    isLoading(newValue) {
+      if (!newValue) {
+        nextTick(() => {
+          this.focusInput()
+        })
+      }
+    },
   },
   methods: {
     getAllPokemon() {
@@ -108,11 +122,22 @@ export default defineComponent({
           this.isLoading = false
         })
     },
+    focusInput() {
+      const input = this.$refs.inputRef as HTMLInputElement
+      input?.focus()
+    },
     focusHandler() {
       this.isAutosuggestOpen = true
     },
-    addPokemonToTeam(pokemon: NamedAPIResourceList["results"][0]) {
-      this.pokemonStore.addPokemonToTeam(pokemon, this.side)
+    async addPokemonToTeam(pokemon: NamedAPIResourceList["results"][0]) {
+      this.isLoading = true
+      const response = await this.pokemonStore.addPokemonToTeam(pokemon, this.side)
+      if (response) {
+        this.$emit("close")
+        return
+      }
+      // TODO: handle error case
+      console.warn("Failed to add pokemon")
       this.$emit("close")
     },
   },

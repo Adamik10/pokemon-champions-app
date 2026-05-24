@@ -86,9 +86,17 @@ export default defineComponent({
   mounted() {
     this.getallMoves()
     nextTick(() => {
-      const input = this.$refs.inputRef as HTMLInputElement
-      input?.focus()
+      this.focusInput()
     })
+  },
+  watch: {
+    isLoading(newValue) {
+      if (!newValue) {
+        nextTick(() => {
+          this.focusInput()
+        })
+      }
+    },
   },
   methods: {
     getallMoves() {
@@ -105,17 +113,19 @@ export default defineComponent({
     focusHandler() {
       this.isAutosuggestOpen = true
     },
+    focusInput() {
+      const input = this.$refs.inputRef as HTMLInputElement
+      input?.focus()
+    },
     async addMoveToActivePokemon(move: NamedAPIResourceList["results"][0]) {
       this.isLoading = true
       const reponse = await this.pokemonStore.addMoveToActivePokemon(move, this.side, this.moveSlot)
       if (reponse) {
-        this.isLoading = false
         this.$emit("close")
         return
       }
       // TODO: handle error case
       console.warn("Failed to add move")
-      this.isLoading = false
       this.$emit("close")
     },
   },

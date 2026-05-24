@@ -1,6 +1,6 @@
 <template>
   <button
-    class="h-10 w-10 overflow-hidden rounded-full border outline-1 transition-transform duration-100
+    class="h-8 w-8 overflow-hidden rounded-full border outline-1 transition-transform duration-100
       active:scale-85"
     :class="{
       [`from-active-yellow to-active-green outline-active-green shadow-active-glow border-white

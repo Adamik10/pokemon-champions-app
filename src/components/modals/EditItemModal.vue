@@ -13,7 +13,10 @@
         v-if="isAutosuggestOpen"
         class="border-base-lilac absolute top-8 max-h-9/10 w-full overflow-y-scroll rounded-br-3xl
           rounded-bl-sm border-t-0 border-r border-b border-l bg-white shadow-lg">
-        <ul class="flex h-full flex-col">
+        <div v-if="isLoading" class="flex min-h-32 items-center justify-center">
+          <LoadingSpinner color="base-lilac" />
+        </div>
+        <ul v-else class="flex h-full flex-col">
           <li
             v-for="(item, index) in filteredItems"
             :key="item.name"
@@ -35,6 +38,7 @@ import type { NamedAPIResourceList } from "pokenode-ts"
 import { defineComponent, nextTick } from "vue"
 
 import PokemonSprite from "@/components/PokemonSprite.vue"
+import LoadingSpinner from "@/components/UI/LoadingSpinner.vue"
 import type { Side } from "@/global/gloabl.types"
 import { usePokemonStore } from "@/stores/pokemon"
 
@@ -42,6 +46,7 @@ export default defineComponent({
   name: "EditItemModal",
   components: {
     PokemonSprite,
+    LoadingSpinner,
   },
   props: {
     side: {
@@ -58,7 +63,7 @@ export default defineComponent({
   data() {
     return {
       isLoading: false,
-      isAutosuggestOpen: false,
+      isAutosuggestOpen: true,
       allItems: [] as NamedAPIResourceList["results"][0][],
       search: "",
     }
@@ -76,9 +81,17 @@ export default defineComponent({
   mounted() {
     this.getallItems()
     nextTick(() => {
-      const input = this.$refs.inputRef as HTMLInputElement
-      input?.focus()
+      this.focusInput()
     })
+  },
+  watch: {
+    isLoading(newValue) {
+      if (!newValue) {
+        nextTick(() => {
+          this.focusInput()
+        })
+      }
+    },
   },
   methods: {
     getallItems() {
@@ -92,11 +105,22 @@ export default defineComponent({
           this.isLoading = false
         })
     },
+    focusInput() {
+      const input = this.$refs.inputRef as HTMLInputElement
+      input?.focus()
+    },
     focusHandler() {
       this.isAutosuggestOpen = true
     },
-    addItemToActivePokemon(item: NamedAPIResourceList["results"][0]) {
-      this.pokemonStore.addItemToActivePokemon(item, this.side)
+    async addItemToActivePokemon(item: NamedAPIResourceList["results"][0]) {
+      this.isLoading = true
+      const response = await this.pokemonStore.addItemToActivePokemon(item, this.side)
+      if (response) {
+        this.$emit("close")
+        return
+      }
+      // TODO: handle error case
+      console.warn("Failed to add item")
       this.$emit("close")
     },
   },

@@ -38,7 +38,7 @@
                 : 'Select item'
               : '-'
           "
-          @click="openEditItemModal()"
+          @click="activePokemon ? openEditItemModal() : null"
           width-class="w-9/10 mr-auto" />
       </div>
 
@@ -85,7 +85,7 @@
         <StatsSection />
       </div>
     </div>
-    <div class="absolute -bottom-3 left-1 flex gap-1.5">
+    <div class="absolute -bottom-1 left-1 flex gap-1.5">
       <ActionButton
         v-for="actionButton in pokemonActionButtons"
         :key="actionButton"

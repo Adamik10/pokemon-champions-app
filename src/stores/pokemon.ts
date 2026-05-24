@@ -26,8 +26,12 @@ export const usePokemonStore = defineStore("pokemon", {
         moves: [],
       }
     },
-    async addPokemonToTeam(pokemon: NamedAPIResourceList["results"][0], team: Side) {
+    async addPokemonToTeam(
+      pokemon: NamedAPIResourceList["results"][0],
+      team: Side
+    ): Promise<boolean> {
       const data = await pokeApi.getPokemonByUrl(pokemon.url)
+      if (!data) return false
       const initializedPokemon = this.initPokemon(data)
       if (team === "player") {
         this.playerTeam.push(initializedPokemon)
@@ -36,6 +40,7 @@ export const usePokemonStore = defineStore("pokemon", {
         this.opponentTeam.push(initializedPokemon)
         this.activePokemonOpponent = initializedPokemon
       }
+      return true
     },
     setActivePokemon(pokemon: PersonalizedPokemon, team: Side) {
       if (team === "player") {
@@ -85,16 +90,21 @@ export const usePokemonStore = defineStore("pokemon", {
         this.loading = false
       }
     },
-    async addItemToActivePokemon(item: NamedAPIResourceList["results"][0], team: Side) {
+    async addItemToActivePokemon(
+      item: NamedAPIResourceList["results"][0],
+      team: Side
+    ): Promise<Boolean> {
       if (!this.activePokemonPlayer) {
-        return
+        return false
       }
       const data = await itemApi.getItemByName(item.name)
+      if (!data) return false
       if (team === "player") {
         this.activePokemonPlayer.item = data
       } else if (team === "opponent") {
         this.activePokemonOpponent!.item = data
       }
+      return true
     },
     // ---------------- Moves -----------------
     async getAllMoves() {
