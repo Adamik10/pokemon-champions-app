@@ -3,7 +3,7 @@
   "short_name": "ChampHelper",
   "start_url": "/",
   "display": "fullscreen",
-  "background_color": "#4922fd",
+  "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "icons": [
     {
