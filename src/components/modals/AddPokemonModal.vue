@@ -19,7 +19,7 @@
         </div>
         <ul v-else class="flex h-full flex-col">
           <li
-            v-for="pokemon in filteredPokemon"
+            v-for="pokemon in visiblePokemon"
             :key="pokemon.name"
             class="text-headline text-base-purple flex items-center px-4 capitalize"
             @click="addPokemonToTeam(pokemon)">
@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import type { NamedAPIResourceList } from "pokenode-ts"
+import type { NamedAPIResource, NamedAPIResourceList } from "pokenode-ts"
 import { defineComponent, nextTick } from "vue"
 
 import PokemonSprite from "@/components/PokemonSprite.vue"
@@ -80,6 +80,7 @@ export default defineComponent({
       isAutosuggestOpen: true,
       allPokemon: [] as NamedAPIResourceList["results"][0][],
       search: "",
+      visiblePokemon: [] as NamedAPIResourceList["results"][0][],
     }
   },
   computed: {
@@ -111,16 +112,14 @@ export default defineComponent({
     },
   },
   methods: {
-    getAllPokemon() {
+    async getAllPokemon() {
       this.isLoading = true
-      this.pokemonStore
-        .getAllPokemon()
-        .then(data => {
-          this.allPokemon = data
-        })
-        .finally(() => {
-          this.isLoading = false
-        })
+      const data = await this.pokemonStore.getAllPokemon()
+      this.allPokemon = data
+      this.isLoading = false
+      requestAnimationFrame(() => {
+        this.renderInChunks(data)
+      })
     },
     focusInput() {
       const input = this.$refs.inputRef as HTMLInputElement
@@ -139,6 +138,19 @@ export default defineComponent({
       // TODO: handle error case
       console.warn("Failed to add pokemon")
       this.$emit("close")
+    },
+    renderInChunks(list: NamedAPIResource[]) {
+      const chunkSize = 100
+      let index = 0
+      const step = () => {
+        const next = list.slice(index, index + chunkSize)
+        this.visiblePokemon.push(...next)
+        index += chunkSize
+        if (index < list.length) {
+          requestAnimationFrame(step)
+        }
+      }
+      step()
     },
   },
 })
