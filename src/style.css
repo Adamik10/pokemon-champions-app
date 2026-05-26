@@ -159,3 +159,7 @@ body {
     " bg-type-poison bg-type-ground bg-type-flying bg-type-psychic bg-type-bug bg-type-rock bg-type-ghost "
     " bg-type-dragon bg-type-dark bg-type-steel bg-type-fairy"
 );
+
+html {
+  scrollbar-gutter: stable;
+}
