@@ -8,8 +8,14 @@
           text-center"
         :class="(index + 1) % 2 === 0 ? 'bg-base-purple/33' : ''">
         <component :is="stats[stat].component" class="h-auto w-4" />
-        <div class="text-label font-200 text-white">80</div>
-        <div class="bg-base-purple text-label px-2 text-white">120</div>
+        <div class="text-label font-200 text-white">
+          {{ activePokemon ? activePokemon.pokemon.stats[index].base_stat : "-" }}
+        </div>
+        <div class="bg-base-purple text-label px-2 text-white">
+          {{
+            activePokemon?.stats?.[stat]?.actualStat ? activePokemon.stats[stat].actualStat : "-"
+          }}
+        </div>
         <div
           v-if="index !== 0"
           class="text-bold-number border-base-lilac text-base-lilac absolute -left-4.5 flex
@@ -35,7 +41,9 @@ import { defineComponent } from "vue"
 
 import DiamondText from "@/components/UI/DiamondText.vue"
 import RoundedTable from "@/components/UI/RoundedTable.vue"
+import type { Side } from "@/global/gloabl.types"
 import { stats } from "@/global/global.consts"
+import { usePokemonStore } from "@/stores/pokemon"
 
 export default defineComponent({
   name: "StatsSection",
@@ -44,11 +52,15 @@ export default defineComponent({
     DiamondText,
   },
   props: {
-    exampleProp: String,
+    side: {
+      type: String as () => Side,
+      required: true,
+    },
   },
   setup() {
     return {
       stats,
+      pokemonStore: usePokemonStore(),
     }
   },
   data() {
@@ -56,6 +68,12 @@ export default defineComponent({
   },
   computed: {
     statKeys: () => Object.keys(stats) as (keyof typeof stats)[],
+    activePokemon() {
+      if (this.side === "player") {
+        return this.pokemonStore.activePokemonPlayer
+      }
+      return this.pokemonStore.activePokemonOpponent
+    },
   },
   methods: {},
 })

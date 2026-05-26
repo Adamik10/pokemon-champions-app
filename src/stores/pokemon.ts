@@ -2,6 +2,7 @@ import { defineStore } from "pinia"
 import type { NamedAPIResourceList, Pokemon, PokemonSpecies } from "pokenode-ts"
 
 import type { PersonalizedPokemon, Side } from "@/global/gloabl.types"
+import { createInitialStats } from "@/global/global.helper"
 import { itemApi } from "@/services/itemApi"
 import { moveApi } from "@/services/moveApi"
 import { pokeApi } from "@/services/pokeApi"
@@ -25,6 +26,8 @@ export const usePokemonStore = defineStore("pokemon", {
         ability: pokemon.abilities[0],
         item: null,
         moves: [],
+        nature: null,
+        stats: createInitialStats(pokemon),
       }
     },
     async addPokemonToTeam(

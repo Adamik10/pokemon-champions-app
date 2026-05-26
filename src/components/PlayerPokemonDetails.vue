@@ -86,7 +86,7 @@
       </div>
       <!-- Stats section -->
       <div class="w-1/3">
-        <StatsSection />
+        <StatsSection side="player" />
       </div>
     </div>
     <div class="absolute -bottom-1 left-1 flex gap-1.5">
